@@ -1,0 +1,72 @@
+<form [formGroup]="inscriptionForm" novalidate (ngSubmit)="onSubmit()">
+  <mat-card class="inscription-card">
+    <mat-card-header>
+      <mat-card-title>Information d'inscription</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Prénom" formControlName="firstName">
+            <mat-error *ngIf="inscriptionForm.controls['firstName'].hasError('required')">
+              Prénom <strong>requis</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>  
+      <div class="row">  
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Nom" formControlName="lastName">
+            <mat-error *ngIf="inscriptionForm.controls['lastName'].hasError('required')">
+              Nom <strong>requis</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input type="email" matInput placeholder="email" formControlName="email">
+            <mat-error *ngIf="inscriptionForm.controls['email'].hasError('required')">
+              e-mail <strong>requis</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">  
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Username" formControlName="username">
+            <mat-error *ngIf="inscriptionForm.controls['username'].hasError('required')">
+              Username <strong>requis</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input type="password" matInput placeholder="mot de passe" formControlName="hash">
+            <mat-error *ngIf="inscriptionForm.controls['hash'].hasError('required')">
+              mot de passe <strong>requis</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input type="password" matInput placeholder="confirmez le mot de passe" formControlName="hash2">
+            <mat-error *ngIf="inscriptionForm.controls['hash2'].hasError('required')">
+              confirmation <strong>requise</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

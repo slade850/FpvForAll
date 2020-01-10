@@ -1,0 +1,6 @@
+<h2>{{ section }}</h2>
+<mat-card *ngFor="let topic of topics">
+    <mat-card-title>{{ topic.title }}</mat-card-title>
+    <mat-card-content>{{ topic.content }}</mat-card-content>
+    <mat-card-footer>{{ topic.createdAt | date:'short' }}</mat-card-footer>
+</mat-card>
