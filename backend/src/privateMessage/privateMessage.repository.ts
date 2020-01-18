@@ -9,7 +9,7 @@ export class PrivateMessageRepository extends Repository<PrivateMessage> {
 
         const query = this.createQueryBuilder('privateMessages');
 
-        const privateMessages = await query.andWhere('privateMessages.editor = :id AND privateMessages.viewSend = true OR privateMessages.recipient = :id AND privateMessages.viewRecip = true', { id: id }).getMany();
+        const privateMessages = await query.andWhere('privateMessages.editor = :id AND privateMessages.viewSend = true OR privateMessages.recipient = :id AND privateMessages.viewRecip = true', { id: id }).innerJoin('privateMessages.editor', 'editor').innerJoin('privateMessages.recipient', 'recipient').addSelect(['recipient.username','editor.username']).orderBy('privateMessages.updatedAt', "DESC").getMany();
 
         return privateMessages;
     }

@@ -10,7 +10,6 @@ export class AuthInterceptorService implements HttpInterceptor {
 
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    console.log("Interception In Progress"); //SECTION 1
     if(sessionStorage.getItem('token')){
       const token: string = sessionStorage.getItem('token');
     req = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + token) });
@@ -21,7 +20,7 @@ export class AuthInterceptorService implements HttpInterceptor {
     return next.handle(req)
         .pipe(
             catchError((error: HttpErrorResponse) => {
-                //401 UNAUTHORIZED - SECTION 2
+                //401 UNAUTHORIZED
                 if (error && error.status === 401) {
                     console.log("ERROR 401 UNAUTHORIZED")
                 }

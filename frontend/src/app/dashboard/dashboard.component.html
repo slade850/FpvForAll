@@ -1,0 +1,43 @@
+<div class="dashboard">
+<mat-card class="infoUser">
+    <mat-list>
+        <mat-list-item> {{user.firstName}} {{user.lastName}} </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> {{user.username}} </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> {{user.email}} </mat-list-item>
+    </mat-list>
+</mat-card>
+<mat-card class="messageView">
+    <mat-card-header>
+        <mat-card-title>Messages privés</mat-card-title>
+    </mat-card-header>
+    <mat-card *ngFor="let message of messages" [ngClass]="(message.editor.username !== user.username)?'messageCardLeft':'messageCardRight'">
+        <mat-card-header>
+            <mat-card-title *ngIf="message.editor.username !== user.username"> {{ message.editor.username }} </mat-card-title>
+            <mat-card-subtitle> {{message.subject}} </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content> {{message.content}} </mat-card-content>
+        <mat-card-footer> {{message.updatedAt | date:'short'}} </mat-card-footer>
+    </mat-card>
+    <mat-card class="sendMessage">
+        <mat-card-header>
+            <mat-card-title>Envoyer un message</mat-card-title>
+            <form [formGroup]="msgForm" class="msgForm" (ngSubmit)="onSubmit()">
+                <mat-form-field class="form-group">
+                    <input matInput placeholder="Destinataire" id="sendTo" class="form-control" formControlName="sendTo">
+                </mat-form-field>
+                <mat-form-field class="form-group">
+                    <input matInput placeholder="Sujet" id="subject" class="form-control" formControlName="subject">
+                </mat-form-field>
+                <mat-form-field class="form-group">
+                    <textarea matInput placeholder="Message ..." id="content" class="form-control" formControlName="content"></textarea>
+                </mat-form-field>
+                <mat-card-actions>
+                    <button mat-raised-button color="primary" type="submit">Envoyer</button>
+                </mat-card-actions>
+            </form>
+        </mat-card-header>
+    </mat-card>
+</mat-card>
+</div>

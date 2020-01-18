@@ -23,6 +23,12 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptorService } from './auth-interceptor.service';
 import { ApiService } from './service/api.service';
 import { SectionsComponent } from './sections/sections.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatMenuModule } from '@angular/material/menu';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { MatTableModule } from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -30,13 +36,17 @@ import { SectionsComponent } from './sections/sections.component';
     NavBarComponent,
     InscritptionComponent,
     ConnexionComponent,
-    SectionsComponent
+    SectionsComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
+    MatSnackBarModule,
+    MatPaginatorModule,
+    MatTableModule,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
@@ -48,9 +58,11 @@ import { SectionsComponent } from './sections/sections.component';
     MatRadioModule,
     MatCardModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatGridListModule,
+    MatMenuModule
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }, ApiService],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }, ApiService, {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 3000, verticalPosition: 'top', horizontalPosition: 'center'}}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
