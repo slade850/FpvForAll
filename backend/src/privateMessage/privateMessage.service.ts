@@ -33,7 +33,7 @@ export class PrivateMessagesService {
         if(req.user.id === privateMessage.editor.id){
             return this.privateMessageRepository.update(id, privateMessageDto);
         }  
-        throw new BadRequestException({error: "vous ne possédez pas les droits sur ce PrivateMessageaire"})  
+        throw new BadRequestException({error: "vous ne possédez pas les droits sur ce Message"})  
     }
 
     async deletePrivateMessage(id, req): Promise<UpdateResult> {
@@ -43,7 +43,7 @@ export class PrivateMessagesService {
         } else if (req.user.id === privateMessage.recipient.id) {
             return this.privateMessageRepository.update(id, {viewRecip: false})
         }
-        throw new BadRequestException({error: "vous ne possédez pas les droits sur ce PrivateMessageaire"})
+        throw new BadRequestException({error: "vous ne possédez pas les droits sur ce Message"})
     }
 
 }

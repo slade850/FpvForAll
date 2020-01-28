@@ -1,5 +1,13 @@
 <div class="dashboard">
 <mat-card class="infoUser">
+    <img mat-card-image src="{{user.avatar}}" alt="avatar de l'utilisateur" (click)="avatarChange()" >
+    <div *ngIf="changeAvatar">
+        <form [formGroup] = "uploadForm" (ngSubmit)="onUpload()">
+        <input style="display: none" type="file" name="image" (change)="onFileChanged($event)" #fileInput>
+        <button type="button" (click)="fileInput.click()">Selectionner une image</button>
+        <button type="submit">Upload!</button>
+    </form>
+    </div>
     <mat-list>
         <mat-list-item> {{user.firstName}} {{user.lastName}} </mat-list-item>
         <mat-divider></mat-divider>
@@ -18,26 +26,29 @@
             <mat-card-subtitle> {{message.subject}} </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content> {{message.content}} </mat-card-content>
-        <mat-card-footer> {{message.updatedAt | date:'short'}} </mat-card-footer>
+        <mat-divider></mat-divider>
+        <mat-card-footer> {{message.updatedAt | date:'short'}} <span (click)="deletMessage(message.id)">X</span></mat-card-footer>
     </mat-card>
-    <mat-card class="sendMessage">
-        <mat-card-header>
-            <mat-card-title>Envoyer un message</mat-card-title>
-            <form [formGroup]="msgForm" class="msgForm" (ngSubmit)="onSubmit()">
-                <mat-form-field class="form-group">
-                    <input matInput placeholder="Destinataire" id="sendTo" class="form-control" formControlName="sendTo">
-                </mat-form-field>
-                <mat-form-field class="form-group">
-                    <input matInput placeholder="Sujet" id="subject" class="form-control" formControlName="subject">
-                </mat-form-field>
-                <mat-form-field class="form-group">
-                    <textarea matInput placeholder="Message ..." id="content" class="form-control" formControlName="content"></textarea>
-                </mat-form-field>
-                <mat-card-actions>
-                    <button mat-raised-button color="primary" type="submit">Envoyer</button>
-                </mat-card-actions>
-            </form>
-        </mat-card-header>
-    </mat-card>
+</mat-card>
+<mat-card class="sendMessage">
+    <mat-card-header>
+        <mat-card-title>Envoyer un message</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>   
+        <form [formGroup]="msgForm" class="msgForm" (ngSubmit)="onSubmit()">
+            <mat-form-field class="form-group">
+                <input matInput placeholder="Destinataire" id="sendTo" class="form-control" formControlName="sendTo">
+            </mat-form-field>
+            <mat-form-field class="form-group">
+                <input matInput placeholder="Sujet" id="subject" class="form-control" formControlName="subject">
+            </mat-form-field>
+            <mat-form-field class="form-group">
+                <textarea matInput placeholder="Message ..." id="content" class="form-control" formControlName="content"></textarea>
+            </mat-form-field>
+            <mat-card-actions>
+                <button mat-raised-button color="primary" type="submit">Envoyer</button>
+            </mat-card-actions>
+        </form>
+    </mat-card-content>     
 </mat-card>
 </div>

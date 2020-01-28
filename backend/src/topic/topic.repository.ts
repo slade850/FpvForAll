@@ -10,9 +10,17 @@ export class TopicRepository extends Repository<Topic>{
 
         query.innerJoinAndSelect('Topics.section', 'section');
 
-        const topics = await query.andWhere('Topics.section = :id', { id: id }).getMany();
+        const topics = await query.andWhere('Topics.section = :id', { id: id }).innerJoin('Topics.editor', 'editor').addSelect(['editor.username', 'editor.avatar']).getMany();
         return topics;
     }
+
+    async getTopicDetail(id): Promise<Topic>{
+        const query = this.createQueryBuilder('Topic');
+
+        const topic = await query.where('Topic.id = :id', { id: id }).innerJoin('Topic.editor', 'editor').addSelect(['editor.username', 'editor.avatar']).getOne();
+        return topic;
+    }
+
     async createTopic(topicDto: TopicDto, id, user): Promise<Topic> {
         
         const topic = new Topic();

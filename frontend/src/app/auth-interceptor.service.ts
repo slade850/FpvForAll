@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output } from '@angular/core';
 import { HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from "rxjs/operators";
 import { throwError } from 'rxjs';
@@ -13,7 +13,7 @@ export class AuthInterceptorService implements HttpInterceptor {
     if(sessionStorage.getItem('token')){
       const token: string = sessionStorage.getItem('token');
     req = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + token) });
-    req = req.clone({ headers: req.headers.set('Content-Type', 'application/json') });
+
     req = req.clone({ headers: req.headers.set('Accept', 'application/json') });
     }
     

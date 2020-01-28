@@ -24,6 +24,9 @@ export class User extends BaseEntity {
 
     @Column({unique: true})
     email: string
+
+    @Column({default: 'http://localhost:3000/user/image/051cscrat.jpg'})
+    avatar: string
     
     @Column({default: false})
     admin: boolean

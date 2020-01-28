@@ -7,8 +7,6 @@ import { TopicUpdateDto } from './dto/topic-update.dto';
 import { AuthGuard } from '@nestjs/passport';
 
 
-
-
 @Controller(':name/topics')
 export class TopicController {
     constructor(private topicService: TopicService){}
@@ -32,17 +30,18 @@ export class TopicController {
 
     @UseGuards(AuthGuard('jwt'))
     @Delete('/:id')
-    deletePost(@Param('id', ParseIntPipe) id:number): Promise<void> {
-      return this.topicService.deleteTopic(id);
+    deletePost(@Param('id', ParseIntPipe) id:number, @Request() req): Promise<void> {
+      return this.topicService.deleteTopic(id, req);
     }
 
     @UseGuards(AuthGuard('jwt'))
     @Patch('/:id')
     updatePost(  
       @Param('id', ParseIntPipe) id: number,
-      @Body()topicUpdateDto: TopicUpdateDto
+      @Body()topicUpdateDto: TopicUpdateDto, 
+      @Request() req
     ): Promise<UpdateResult>{
-      return this.topicService.updateTopic(id,topicUpdateDto);
+      return this.topicService.updateTopic(id,topicUpdateDto, req);
     }
 
 }

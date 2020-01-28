@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, Patch, ParseIntPipe, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Patch, ParseIntPipe, UseGuards, Request, UnauthorizedException } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import { Article } from './article.entity';
 import { ArticleDto as ArticleDto } from './dto/article.dto';
@@ -9,11 +9,11 @@ import { AuthGuard } from '@nestjs/passport';
 
 
 
-@Controller(':name/articles')
+@Controller('articles')
 export class ArticlesController {
     constructor(private articleService: ArticlesService){}
     
-    @Get()
+    @Get('/:name')
     getArticles(@Param('name') name: string ): Promise<Article[]> {
       return this.articleService.getArticles(name);
     }
@@ -24,24 +24,25 @@ export class ArticlesController {
     }
 
     @UseGuards(AuthGuard('jwt'))
-    @Post()
-    createArticle(@Body()articleDto: ArticleDto, @Param('name') name: string): Promise<Article> {
-      return this.articleService.createArticle(articleDto, name);
+    @Post('/:name')
+    createArticle(@Body()articleDto: ArticleDto, @Param('name') name: string, @Request() req): Promise<Article> {
+      return this.articleService.createArticle(articleDto, name, req);
     }
 
     @UseGuards(AuthGuard('jwt'))
     @Delete('/:id')
-    deleteArticle(@Param('id', ParseIntPipe) id:number): Promise<void> {
-      return this.articleService.deleteArticle(id);
+    deleteArticle(@Param('id', ParseIntPipe) id:number, @Request() req): Promise<void> {
+      return this.articleService.deleteArticle(id, req);
     }
 
     @UseGuards(AuthGuard('jwt'))
     @Patch('/:id')
     updateArticle(  
       @Param('id', ParseIntPipe) id: number,
-      @Body()articleUpdateDto: ArticleUpdateDto
+      @Body()articleUpdateDto: ArticleUpdateDto,
+      @Request() req
     ): Promise<UpdateResult>{
-      return this.articleService.updateArticle(id,articleUpdateDto);
+        return this.articleService.updateArticle(id,articleUpdateDto, req);
     }
 
 }

@@ -7,5 +7,6 @@ export class ArticleDto {
     imageAlt?: string;
     content: string;
     status: string;
+    section?: Section;
     comments: Comment[];
 }

@@ -1,10 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { Article } from './article.entity';
 import { ArticleDto } from './dto/article.dto';
 import { ArticleRepository } from './article.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ArticleUpdateDto } from './dto/article-update.dto';
 import { SectionsService } from '../section/sections.service';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class ArticlesService {
@@ -13,6 +14,7 @@ export class ArticlesService {
         @InjectRepository(ArticleRepository)
         private articleRepository: ArticleRepository,
         private readonly sectionsService: SectionsService,
+        private readonly usersService: UsersService
     ){}
 
     async getArticles(name): Promise<Article []> {
@@ -29,20 +31,33 @@ export class ArticlesService {
     }
     
 
-    async createArticle(articleDto: ArticleDto, name): Promise<Article> {
-      const section = await this.sectionsService.getSectionByName(name);
-      return this.articleRepository.createArticle(articleDto, section.id);
+    async createArticle(articleDto: ArticleDto, name, req): Promise<Article> {
+      const user = await this.usersService.findById(req.user.id);
+        if(user.admin){
+          const section = await this.sectionsService.getSectionByName(name);
+          return this.articleRepository.createArticle(articleDto, section.id);
+        } else {
+          throw new UnauthorizedException('operation non autoriser');
+        }
     }
 
-    async deleteArticle(id: number): Promise<void> {
-      const result = await this.articleRepository.delete(id);
-      if(result.affected === 0){
-        throw new  NotFoundException(`Article with ID: ${id} not found`);
-      }
+    async deleteArticle(id: number, req): Promise<void> {
+      const user = await this.usersService.findById(req.user.id);
+      if(user.admin){
+        const result = await this.articleRepository.delete(id);
+        if(result.affected === 0){
+          throw new  NotFoundException(`Article with ID: ${id} not found`);
+        }
+      }  
     }
 
-    async updateArticle(id: number, articleUpdateDto: ArticleUpdateDto) {
-      return this.articleRepository.update(id, articleUpdateDto);
+    async updateArticle(id: number, articleUpdateDto: ArticleUpdateDto, req) {
+      const user = await this.usersService.findById(req.user.id);
+        if(user.admin){
+          return this.articleRepository.update(id, articleUpdateDto);
+        } else {
+          throw new UnauthorizedException('operation non autoriser');
+        }
     }
 
 }

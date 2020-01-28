@@ -1,0 +1,15 @@
+<mat-card class="editReply">
+    <mat-card-header>
+        <mat-card-title>Edition Reply</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>   
+        <form [formGroup]="replyForm" class="replyForm" (ngSubmit)="onSubmit()">
+            <mat-form-field class="form-group">
+                <textarea rows="10" [value]="reply.content" matInput id="content" class="form-control" formControlName="content"></textarea>
+            </mat-form-field>
+            <mat-card-actions>
+                <button mat-raised-button color="primary" type="submit">Envoyer</button>
+            </mat-card-actions>
+        </form>
+    </mat-card-content>     
+</mat-card>

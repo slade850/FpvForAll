@@ -29,6 +29,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatTableModule } from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { RouteGuardService } from './service/route-guard.service';
+import { DetailViewComponent } from './detail-view/detail-view.component';
+import { HomeComponent } from './home/home.component';
+import { EditTopicComponent } from './edit-topic/edit-topic.component';
+import { EditReplyComponent } from './edit-reply/edit-reply.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +42,11 @@ import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/mater
     InscritptionComponent,
     ConnexionComponent,
     SectionsComponent,
-    DashboardComponent
+    DashboardComponent,
+    DetailViewComponent,
+    HomeComponent,
+    EditTopicComponent,
+    EditReplyComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +71,7 @@ import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/mater
     MatGridListModule,
     MatMenuModule
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }, ApiService, {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 3000, verticalPosition: 'top', horizontalPosition: 'center'}}],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }, ApiService, {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 3000, verticalPosition: 'top', horizontalPosition: 'center'}}, RouteGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

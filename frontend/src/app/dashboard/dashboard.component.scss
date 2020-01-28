@@ -9,14 +9,12 @@
 .infoUser{
     margin: auto;
     margin-top: 20px;
-    max-width: 500px;
+    max-width: 400px;
     min-width: 250px;
-    
-    mat-list-item{
-        margin: auto;
-    }
 }
+
 .messageView{
+    overflow: scroll;
     margin: auto;
     margin-top: 20px;
     max-width: 1300px;
@@ -24,19 +22,35 @@
     max-height: 450px;
 
     .messageCardLeft{
+        margin-top: 5px;
         background-color: #c8f2ff;
         width: 75%;
         text-align: left;
+        mat-card-footer{
+            display: flex;
+            justify-content: space-between;
+        }
     }
 
     .messageCardRight{
         background-color: #dbffc8;
         margin: auto;
+        margin-top: 5px;
         margin-right: 0;
         width: 75%;
         text-align: right;
         mat-card-header{
             justify-content: flex-end;
         }
+        mat-card-footer{
+            display: flex;
+            justify-content: space-between;
+        }
     }
+}
+.sendMessage{
+    margin: auto;
+    margin-top: 20px;
+    max-width: 1300px;
+    min-width: 250px;
 }

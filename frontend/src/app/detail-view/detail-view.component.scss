@@ -1,17 +1,10 @@
-.topiCard{
-    margin: auto;
-    margin-top: 20px;
-    max-width: 1300px;
-    min-width: 250px;
-}
-
-.addPost{
+.addReply{
     font-size: 48px;
     position: absolute;
     bottom: 24px;
     right: 24px;
 }
-.sendPost{
+.sendReply{
     min-width: 250px;
     max-width: 500px;
     max-height: 150px;
@@ -23,7 +16,17 @@
         width: 100%;
     }
 }
+.header-image{
+    background-size: cover;
+}
 
-.section-container{
-    max-width: 1500px;
+.detailCard{
+    margin: auto;
+    margin-top: 20px;
+    max-width: 1300px;
+
+    mat-card-footer{
+        display: flex;
+        justify-content: space-between;
+    }
 }

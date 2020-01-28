@@ -1,6 +1,29 @@
+<div class="section-container">
 <h2>{{ section }}</h2>
-<mat-card *ngFor="let topic of topics">
+<mat-card class="topiCard" *ngFor="let topic of topics" [routerLink]="['/topic/detail', topic.id]"
+routerLinkActive="topic-active">
     <mat-card-title>{{ topic.title }}</mat-card-title>
     <mat-card-content>{{ topic.content }}</mat-card-content>
+    <mat-divider></mat-divider>
     <mat-card-footer>{{ topic.createdAt | date:'short' }}</mat-card-footer>
 </mat-card>
+<mat-icon class="addPost" (click)="open()">add_circle_outline</mat-icon>
+<mat-card class="sendPost" *ngIf="opened">
+    <mat-card-header>
+        <mat-card-title>Poster un topic</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>   
+        <form [formGroup]="postForm" class="postForm" (ngSubmit)="onSubmit()">
+            <mat-form-field class="form-group">
+                <input matInput placeholder="Titre" id="title" class="form-control" formControlName="title">
+            </mat-form-field>
+            <mat-form-field class="form-group">
+                <textarea matInput placeholder="Nouveau topic ..." id="content" class="form-control" formControlName="content"></textarea>
+            </mat-form-field>
+            <mat-card-actions>
+                <button mat-raised-button color="primary" type="submit">Envoyer</button>
+            </mat-card-actions>
+        </form>
+    </mat-card-content>     
+</mat-card>
+</div>

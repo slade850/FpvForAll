@@ -13,9 +13,12 @@ import { CommentsModule } from './comments/comments.module';
 import { TopicModule } from './topic/topic.module';
 import { ReplyModule } from './reply/reply.module';
 import { PrivateMessageModule } from './privateMessage/privateMessage.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
-  imports: [ TypeOrmModule.forRoot(typeOrmConfig), UsersModule, AuthModule, ArticlesModule, SectionsModule, CommentsModule, TopicModule, ReplyModule, PrivateMessageModule ],
+  imports: [ TypeOrmModule.forRoot(typeOrmConfig), UsersModule, AuthModule, ArticlesModule, SectionsModule, CommentsModule, TopicModule, ReplyModule, PrivateMessageModule, MulterModule.register({
+    dest: './files',
+  }) ],
   providers: [UsersService, AuthService],
   controllers: [UserController, AuthController],
 })

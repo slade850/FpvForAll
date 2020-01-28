@@ -10,7 +10,7 @@ export class AuthController {
     @UseGuards(AuthGuard('jwt'))
     @Get('')
     checkAuth() {
-        return true;
+        return {success: true};
     }
 
     @UseGuards(AuthGuard('local'))

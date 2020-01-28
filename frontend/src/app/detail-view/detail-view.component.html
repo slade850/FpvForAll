@@ -1,0 +1,39 @@
+<div>
+    <mat-card class="detailCard">
+        <mat-card-header>
+            <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + topic.editor.avatar + ')'}" class="header-image"></div>
+            <mat-card-title>{{topic.editor.username}}</mat-card-title>
+            <mat-card-subtitle>{{ topic.title }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>{{ topic.content }}</mat-card-content>
+        <mat-divider></mat-divider>
+        <mat-card-footer>{{ topic.createdAt | date:'short' }} <span *ngIf="topic.editor.username === user || adm"><button type="button" [routerLink]="['/edit/topic', topic.id]" routerLinkActive="topic-active">editer</button></span></mat-card-footer>
+    </mat-card>
+    <div *ngFor="let reply of replys">
+        <mat-card class="detailCard">
+            <mat-card-header>
+                <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + reply.editor.avatar +')'}" class="header-image"></div>
+                <mat-card-title style="font-size: 18px;">{{ reply.editor.username }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>{{ reply.content }}</mat-card-content>
+            <mat-divider></mat-divider>
+            <mat-card-footer>{{ reply.createdAt | date:'short' }} <span *ngIf="reply.editor.username === user || adm"><button type="button" [routerLink]="['/edit/reply', reply.id]" routerLinkActive="topic-active">editer</button><button type="button" (click)="deletItem(reply.id)" >X</button></span></mat-card-footer>
+        </mat-card>
+    </div>
+    <mat-icon class="addReply" (click)="open()">add_circle_outline</mat-icon>
+    <mat-card class="sendReply" *ngIf="opened">
+        <mat-card-header>
+            <mat-card-title>Poster une reponse</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>   
+            <form [formGroup]="replyForm" class="replyForm" (ngSubmit)="onSubmit()">
+                <mat-form-field class="form-group">
+                    <textarea matInput placeholder="Message ..." id="content" class="form-control" formControlName="content"></textarea>
+                </mat-form-field>
+                <mat-card-actions>
+                    <button mat-raised-button color="primary" type="submit">Envoyer</button>
+                </mat-card-actions>
+            </form>
+        </mat-card-content>     
+    </mat-card>
+</div>
